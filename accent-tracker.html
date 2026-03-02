@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>60-Day GA Accent Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3d;
+    --accent: #e8c547;
+    --accent2: #7b6fe8;
+    --text: #e8e8f0;
+    --text-dim: #7a7a9a;
+    --text-dimmer: #4a4a6a;
+    --done: #3a8a5a;
+    --done-light: #4aaa6a;
+    --phase1: #e8754a;
+    --phase2: #7b6fe8;
+    --phase3: #4a9ae8;
+    --phase4: #e8c547;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(123,111,232,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(123,111,232,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .title span {
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* PROGRESS BAR */
+  .overall-progress {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .progress-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .progress-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  .progress-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  /* PHASE LEGEND */
+  .phase-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .phase-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .phase-tag:hover { opacity: 0.7; }
+  .phase-tag.p1 { color: var(--phase1); border-color: var(--phase1); }
+  .phase-tag.p2 { color: var(--phase2); border-color: var(--phase2); }
+  .phase-tag.p3 { color: var(--phase3); border-color: var(--phase3); }
+  .phase-tag.p4 { color: var(--phase4); border-color: var(--phase4); }
+
+  /* WEEK */
+  .week {
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .week:hover { border-color: var(--text-dimmer); }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--surface);
+    cursor: pointer;
+    gap: 16px;
+    user-select: none;
+  }
+
+  .week-header:hover { background: var(--surface2); }
+
+  .week-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--text-dimmer);
+    min-width: 28px;
+  }
+
+  .week-info {
+    flex: 1;
+  }
+
+  .week-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .week-focus {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .week-progress-mini {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .day-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .day-dot.done { background: var(--done-light); }
+  .day-dot.partial { background: var(--accent); }
+
+  .week-chevron {
+    color: var(--text-dimmer);
+    font-size: 12px;
+    transition: transform 0.2s;
+  }
+
+  .week.open .week-chevron { transform: rotate(180deg); }
+
+  /* DAY */
+  .days-container {
+    display: none;
+  }
+
+  .week.open .days-container {
+    display: block;
+  }
+
+  .day {
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    cursor: pointer;
+    gap: 12px;
+  }
+
+  .day-header:hover { background: var(--surface); }
+
+  .day-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dimmer);
+    letter-spacing: 1px;
+    min-width: 44px;
+  }
+
+  .day-title-text {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  .day.all-done .day-title-text {
+    color: var(--done-light);
+  }
+
+  .day-check-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dimmer);
+  }
+
+  .day-chevron {
+    color: var(--text-dimmer);
+    font-size: 10px;
+    transition: transform 0.2s;
+  }
+
+  .day.open .day-chevron { transform: rotate(180deg); }
+
+  /* TASKS */
+  .tasks {
+    display: none;
+    padding: 0 20px 16px 20px;
+    background: var(--bg);
+  }
+
+  .day.open .tasks { display: block; }
+
+  /* PHASE BANNER */
+  .phase-banner {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    border-left: 2px solid;
+    margin-left: -20px;
+    padding-left: 18px;
+  }
+
+  .phase-banner.p1 { color: var(--phase1); border-color: var(--phase1); background: rgba(232,117,74,0.04); }
+  .phase-banner.p2 { color: var(--phase2); border-color: var(--phase2); background: rgba(123,111,232,0.04); }
+  .phase-banner.p3 { color: var(--phase3); border-color: var(--phase3); background: rgba(74,154,232,0.04); }
+  .phase-banner.p4 { color: var(--phase4); border-color: var(--phase4); background: rgba(232,197,71,0.04); }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(42,42,61,0.5);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .task:last-child { border-bottom: none; }
+  .task:hover { opacity: 0.8; }
+
+  .task-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .task.checked .task-checkbox {
+    background: var(--done);
+    border-color: var(--done);
+  }
+
+  .task.checked .task-checkbox::after {
+    content: '✓';
+    color: white;
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .task-content {
+    flex: 1;
+  }
+
+  .task-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    transition: color 0.2s;
+  }
+
+  .task.checked .task-text {
+    color: var(--text-dimmer);
+    text-decoration: line-through;
+    text-decoration-color: var(--text-dimmer);
+  }
+
+  .task-link {
+    display: inline-block;
+    margin-top: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border: 1px solid rgba(123,111,232,0.3);
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .task-link:hover {
+    background: rgba(123,111,232,0.1);
+    border-color: var(--accent2);
+  }
+
+  .task-tip {
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--text-dimmer);
+    font-style: italic;
+    line-height: 1.4;
+    padding-left: 8px;
+    border-left: 1px solid var(--border);
+  }
+
+  /* RECORDING NOTE */
+  .rec-task .task-checkbox {
+    border-color: #e84a4a44;
+  }
+  .rec-task.checked .task-checkbox {
+    background: #8a2a2a;
+    border-color: #8a2a2a;
+  }
+
+  .rec-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    background: rgba(232,74,74,0.1);
+    color: #e87a7a;
+    border: 1px solid rgba(232,74,74,0.2);
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-left: 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* NOTES */
+  .day-notes {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .notes-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .notes-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--text-dim);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    padding: 8px 10px;
+    resize: vertical;
+    min-height: 52px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .notes-input:focus {
+    border-color: var(--accent2);
+  }
+
+  .notes-input::placeholder { color: var(--text-dimmer); }
+
+  /* BENCHMARK CARD */
+  .benchmark-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+  }
+
+  .benchmark-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .benchmark-sentence {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  .benchmark-sentence:last-child { border-bottom: none; }
+
+  .benchmark-sentence em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* RESET */
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dimmer);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .reset-btn:hover {
+    border-color: #e84a4a;
+    color: #e87a7a;
+  }
+
+  /* SCROLL TO TOP */
+  .fab {
+    position: fixed;
+    bottom: 28px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-dim);
+    transition: all 0.2s;
+    z-index: 100;
+  }
+
+  .fab:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 24px 16px 60px; }
+    .week-progress-mini { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="title">60-Day <span>GA Accent</span><br>Program</div>
+        <div class="subtitle">Rachel's English · Obama Shadowing · ELSA Speak</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">Reset All Progress</button>
+    </div>
+  </div>
+
+  <div class="overall-progress">
+    <div class="progress-header">
+      <span class="progress-label">Overall Progress</span>
+      <span class="progress-count" id="overall-count">0 / 0 tasks</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="overall-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="benchmark-card">
+    <div class="benchmark-title">⬤ Weekly Benchmark Sentences — Record Every Sunday</div>
+    <div class="benchmark-sentence">1. "The <em>weather</em> in A<em>mer</em>ica is <em>really</em> won<em>der</em>ful in the fall."</div>
+    <div class="benchmark-sentence">2. "I told her I'd <em>probably</em> get to the <em>par</em>ty a little bit <em>later</em>."</div>
+    <div class="benchmark-sentence">3. "Could you give me a <em>better</em> idea of what you were <em>thinking</em>?"</div>
+    <div class="benchmark-sentence">4. "My <em>father</em> worked at a <em>water</em> treatment plant for <em>thir</em>ty years."</div>
+    <div class="benchmark-sentence">5. "She doesn't <em>really</em> want to talk about it, does she?"</div>
+  </div>
+
+  <div class="phase-legend">
+    <div class="phase-tag p1">Phase 1: Articulation (Days 1–15)</div>
+    <div class="phase-tag p2">Phase 2: Prosody (Days 10–30)</div>
+    <div class="phase-tag p3">Phase 3: Connected Speech (Days 20–45)</div>
+    <div class="phase-tag p4">Phase 4: Automation (Days 40–60)</div>
+  </div>
+
+  <div id="weeks-container"></div>
+
+</div>
+
+<div class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const RACHEL_BASE = "https://www.youtube.com/@RachelsEnglish/search?query=";
+const YOUGLISH = "https://youglish.com/pronounce/";
+const ELSA = "https://elsaspeak.com/";
+const OBAMA = "https://www.youtube.com/results?search_query=obama+speech+transcript";
+
+const weeks = [
+  {
+    num: 1,
+    title: "Sound Foundations: /r/, /p/, /θ/",
+    focus: "Phase 1 — Articulatory Recalibration",
+    phase: "p1",
+    days: [
+      {
+        title: "Baseline Recording + American /r/ Introduction",
+        tasks: [
+          { text: "Record the 5 benchmark sentences (above). Save as 'Day 1 Baseline'. Don't fix anything — this is your reference point.", type: "rec" },
+          { text: "Watch Rachel's English: 'How to Pronounce the R Consonant'", link: RACHEL_BASE + "American+R", linkText: "→ Rachel's /r/ video" },
+          { text: "Study the tongue position: curl back without touching palate OR bunch in the middle.", tip: "Try both shapes — most Egyptian Arabic speakers find the bunched-r easier at first." },
+          { text: "Drill in vowel slots (hold each 3 seconds): ɝ… ɝ… ɝ… then: erd, ird, ard, ord, urd" },
+          { text: "Open ELSA Speak — complete today's /r/ drill session", link: ELSA, linkText: "→ Open ELSA" },
+        ]
+      },
+      {
+        title: "/r/ Onset Practice — 'ree, roo, ray, row'",
+        tasks: [
+          { text: "Watch Rachel's English: 'R at the Beginning of Words'", link: RACHEL_BASE + "R+beginning", linkText: "→ Rachel: R onset" },
+          { text: "Drill syllables aloud x20 each: ree — roo — ray — row — rye", tip: "Don't tap. The /r/ must be continuous, vowel-like, never a flap." },
+          { text: "Say each benchmark sentence slowly, paying attention ONLY to every /r/ sound.", link: YOUGLISH + "really", linkText: "→ YouGlish: 'really'" },
+          { text: "ELSA: Practice the /r/ lesson. Note your score.", link: ELSA, linkText: "→ ELSA session" },
+          { text: "Shadow 5 min of Obama. Target: every word with /r/.", link: OBAMA, linkText: "→ Obama speech" },
+        ]
+      },
+      {
+        title: "/p/ — The Aspirated Bilabial Stop",
+        tasks: [
+          { text: "Watch Rachel's English: 'P, B consonants'", link: RACHEL_BASE + "P+B+consonant", linkText: "→ Rachel: P and B" },
+          { text: "Hold your hand in front of your mouth. Say 'pit' — feel the burst of air. Say 'bit' — no burst. Drill 20x each." },
+          { text: "Minimal pair drill (10x each pair): pit/bit — pack/back — pool/bull — cap/cab — simple/symbol" },
+          { text: "YouGlish check: search 'important' and 'problem' — watch 10 clips each, listen for the /p/.", link: YOUGLISH + "important", linkText: "→ YouGlish: 'important'" },
+          { text: "ELSA: /p/ practice session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "/θ/ and /ð/ — The 'th' Sounds",
+        tasks: [
+          { text: "Watch Rachel's English: 'TH Sounds — Voiced and Unvoiced'", link: RACHEL_BASE + "TH+sound", linkText: "→ Rachel: TH sounds" },
+          { text: "Articulation check: tongue tip lightly between or just behind teeth. Continuous airflow. NOT a stop — never /t/ or /d/.", tip: "Egyptians often say 'tink' for 'think'. The /θ/ must be fricative, not a tap." },
+          { text: "Drill /θ/ words x15 each: think, thin, three, throw, through, breath, teeth, both" },
+          { text: "Drill /ð/ words x15 each: this, that, the, then, though, breathe, soothe, bathe" },
+          { text: "ELSA: TH drill session + Shadow 5 min Obama, focus ONLY on every 'the', 'that', 'this', 'there'", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "/v/ Sound + Review Day",
+        tasks: [
+          { text: "Watch Rachel's English: 'V consonant'", link: RACHEL_BASE + "V+consonant", linkText: "→ Rachel: /v/" },
+          { text: "Arabic has no /v/. Top teeth touch lower lip — voice continues through. It is NOT /b/ and NOT /f/." },
+          { text: "Minimal pairs x10 each: vat/bat — veil/bail — vine/bine — very/fairy — live/life" },
+          { text: "Review: record yourself saying 10 words with /r/, 5 with /p/, 5 with /θ/, 5 with /v/. Listen back critically." },
+          { text: "ELSA: /v/ session. Note overall week score.", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Shadowing Day — Obama Focus",
+        tasks: [
+          { text: "Find an Obama speech on YouTube with auto-captions turned ON.", link: OBAMA, linkText: "→ Obama speeches" },
+          { text: "Shadow 15 minutes straight. Don't stop for mistakes. Match rhythm, pitch, and pace — you're a cover band.", tip: "If you can't keep up, shadow at 0.85x speed. YouTube settings → playback speed." },
+          { text: "Identify 3 moments you clearly mispronounced. Write them in the notes below." },
+          { text: "Look up those 3 words on YouGlish and shadow specifically those words 20x.", link: YOUGLISH, linkText: "→ YouGlish" },
+        ]
+      },
+      {
+        title: "Week 1 Benchmark + Reflection",
+        tasks: [
+          { text: "Record the 5 benchmark sentences. Save as 'Day 7'.", type: "rec" },
+          { text: "Listen to Day 1 vs Day 7 back to back. Note the specific change you hear most.", tip: "Be honest. If there's no difference, identify which sound you haven't automated yet." },
+          { text: "ELSA: run any practice session and note your weekly score trajectory.", link: ELSA, linkText: "→ ELSA" },
+          { text: "Write your notes for the week below: what's clicking, what's not." },
+        ]
+      },
+    ]
+  },
+  {
+    num: 2,
+    title: "Vowels + Dark-L",
+    focus: "Phase 1 continued — Vowel Space Expansion",
+    phase: "p1",
+    days: [
+      {
+        title: "The /æ/ Vowel — 'cat, man, bag'",
+        tasks: [
+          { text: "Watch Rachel's English: 'AE as in CAT vowel'", link: RACHEL_BASE + "AE+cat+vowel", linkText: "→ Rachel: /æ/" },
+          { text: "Jaw drops LOW, tongue pushes forward, lips slightly spread. This will feel exaggerated. Good.", tip: "Arabic 'a' is not /æ/. You're not saying 'ket' or 'kat' — the jaw drop distinguishes this." },
+          { text: "Drill x20 each: cat, man, bag, back, hand, that, has, ask, can, fact" },
+          { text: "YouGlish: search 'actually' and 'happen' — listen to jaw movement in 10 clips", link: YOUGLISH + "actually", linkText: "→ YouGlish: 'actually'" },
+          { text: "ELSA: vowel /æ/ session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "/ɪ/ vs /iː/ — 'bit' vs 'beat'",
+        tasks: [
+          { text: "Watch Rachel's English: 'IH as in SIT vowel'", link: RACHEL_BASE + "IH+sit+vowel", linkText: "→ Rachel: /ɪ/" },
+          { text: "/ɪ/ is lax, centralized, short. /iː/ is tense, front, long. Arabic conflates these — every English word with 'i' requires a decision." },
+          { text: "Minimal pairs x15: bit/beat — sit/seat — fit/feet — ship/sheep — list/least — live/leave" },
+          { text: "Shadow 10 min Obama. Focus ONLY on every word with the /ɪ/ vowel (it, is, in, will, this, with, think).", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA: /ɪ/ session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "/ʌ/ Vowel — 'cut, blood, love'",
+        tasks: [
+          { text: "Watch Rachel's English: 'UH as in BUTTER vowel'", link: RACHEL_BASE + "UH+butter+vowel", linkText: "→ Rachel: /ʌ/" },
+          { text: "Mid-central, jaw doesn't drop far. NOT /a/. The word 'love' does NOT sound like Arabic 'lav'." },
+          { text: "Drill x20: cut, but, love, come, blood, flood, money, done, fun, country, enough, wonderful" },
+          { text: "Benchmark sentence 1 focus: 'wonderful' — is your vowel /ʌ/ or /a/?", tip: "Record yourself saying 'wonderful' 10 times. Listen each time." },
+          { text: "ELSA: /ʌ/ session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "The Dark-L — 'feel, ball, tell'",
+        tasks: [
+          { text: "Watch Rachel's English: 'Dark L consonant'", link: RACHEL_BASE + "dark+L", linkText: "→ Rachel: Dark-L" },
+          { text: "The dark-L is velarized — back of tongue raises toward velum. It has a hollow quality. Don't add a vowel after it.", tip: "The biggest error: adding /ɪ/ after final-L. 'Milk' is NOT 'milk-uh'." },
+          { text: "Drill syllable-final L x15 each: feel, ball, tell, fill, real, call, full, will, tall, small, people, problem" },
+          { text: "Shadow 10 min Obama. Focus on every word ending in -l or -ll.", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA session + record 5 sentences with final-L words", link: ELSA, linkText: "→ ELSA", type: "rec" },
+        ]
+      },
+      {
+        title: "Vowels Before /r/ — the ɝ/ɚ sounds",
+        tasks: [
+          { text: "Watch Rachel's English: 'ER vowel / schwa-R'", link: RACHEL_BASE + "ER+vowel+schwa", linkText: "→ Rachel: ER vowel" },
+          { text: "American English colors ALL vowels near /r/. This is the 'rhotic vowel' feature that marks GA immediately.", tip: "'work', 'her', 'first', 'world' — these all have the same rhotic mid-vowel /ɝ/." },
+          { text: "Drill x15: work, word, her, first, world, bird, heard, early, perfect, further, really, story" },
+          { text: "YouGlish: search 'really' and 'America' — listen to how the r-coloring spreads through the vowel", link: YOUGLISH + "really", linkText: "→ YouGlish: 'really'" },
+          { text: "ELSA session focused on rhotic vowels", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Full Shadowing Day",
+        tasks: [
+          { text: "Shadow 20 minutes of Obama straight at 1.0x speed.", link: OBAMA, linkText: "→ Obama speeches" },
+          { text: "After shadowing: pick 5 words you couldn't get right. Look up each on YouGlish.", link: YOUGLISH, linkText: "→ YouGlish" },
+          { text: "Watch Rachel's English video for the most problematic sound from the past two weeks.", link: RACHEL_BASE, linkText: "→ Rachel's channel" },
+          { text: "ELSA: free practice, no specific target today — let it choose", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Week 2 Benchmark + Review",
+        tasks: [
+          { text: "Record the 5 benchmark sentences. Save as 'Day 14'.", type: "rec" },
+          { text: "Listen to Day 1 → Day 7 → Day 14 progression." },
+          { text: "Identify your #1 most improved sound and your #1 remaining problem sound. Write in notes." },
+          { text: "ELSA: note your cumulative score for the week.", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+    ]
+  },
+  {
+    num: 3,
+    title: "Schwa & Stress — The Rhythm Engine",
+    focus: "Phase 2 — Prosodic Rewiring Begins",
+    phase: "p2",
+    days: [
+      {
+        title: "The Schwa /ə/ — The Most Important Sound in English",
+        tasks: [
+          { text: "Watch Rachel's English: 'Schwa Sound — Most Common English Sound'", link: RACHEL_BASE + "schwa+sound", linkText: "→ Rachel: Schwa" },
+          { text: "Unstressed syllables in American English COLLAPSE to /ə/. This is mandatory, not optional.", tip: "'America' = ə-MER-ə-kə. 'problem' = PROB-ləm. 'important' = im-PORT-ənt. Practice each." },
+          { text: "Take 10 three-syllable words. Find the stress. Make everything else schwa. Exaggerate.", link: YOUGLISH + "important", linkText: "→ YouGlish: 'important'" },
+          { text: "Shadow 10 min Obama. Focus: every unstressed syllable should disappear into schwa.", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Word Stress Patterns",
+        tasks: [
+          { text: "Watch Rachel's English: 'English Word Stress'", link: RACHEL_BASE + "word+stress", linkText: "→ Rachel: Word Stress" },
+          { text: "Rule: in 2-syllable nouns/adjectives, stress is usually on syllable 1. In 2-syllable verbs, stress is usually on syllable 2.", tip: "'PREsent' (noun) vs 'preSENT' (verb). 'REcord' vs 'reCORD'. Same spelling, different stress." },
+          { text: "Drill these noun/verb stress shifts x10 each: permit/permit, record/record, object/object, increase/increase, conflict/conflict" },
+          { text: "ELSA: word stress practice. Note any words you were placing stress incorrectly.", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Function Word Reduction",
+        tasks: [
+          { text: "Watch Rachel's English: 'Reduce Function Words'", link: RACHEL_BASE + "reduce+function+words", linkText: "→ Rachel: Function Words" },
+          { text: "These words MUST be reduced in fluent speech: and→/ən/, to→/tə/, for→/fɚ/, of→/ə/, can→/kən/, have→/həv/", tip: "If you pronounce 'and' as /ænd/ in every sentence, you sound like a textbook, not a person." },
+          { text: "Practice sentence at full speed: 'I want to go to the store and get a cup of coffee' → 'I WANna go tə thə STORE ən get ə cup ə COFfee'" },
+          { text: "Shadow 15 min Obama. Focus ONLY on function words — 'the', 'a', 'and', 'to', 'of', 'for'. They should be almost inaudible.", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Sentence Stress & Nuclear Accent",
+        tasks: [
+          { text: "Watch Rachel's English: 'English Sentence Stress'", link: RACHEL_BASE + "sentence+stress", linkText: "→ Rachel: Sentence Stress" },
+          { text: "GA communicates meaning through WHICH word gets tonic stress. Drill: say 'I didn't say he stole it' 5 times, shifting the stressed word each time." },
+          { text: "The unstressed words should become almost a blur between the stressed words. This is the drumbeat of American English.", tip: "Imagine sentence stress as a drumbeat. The stressed words are the hits. Everything else is the fill." },
+          { text: "Shadow 10 min Obama. This time, TAP YOUR FINGER on every word that gets primary stress. Match his rhythm exactly.", link: OBAMA, linkText: "→ Obama" },
+        ]
+      },
+      {
+        title: "Intonation Patterns",
+        tasks: [
+          { text: "Watch Rachel's English: 'English Intonation'", link: RACHEL_BASE + "intonation+patterns", linkText: "→ Rachel: Intonation" },
+          { text: "GA statements & WH-questions: pitch FALLS at end. Yes/No questions: pitch RISES, but it's a low, gentle rise — not dramatic." },
+          { text: "Say these in falling intonation: 'What time is it?', 'Where did you go?', 'I think so.'" },
+          { text: "Say these with rising intonation: 'Are you ready?', 'Did you call?', 'Can I help?'" },
+          { text: "Shadow 15 min Obama — his intonation is deliberate and textbook GA. Map his pitch movements.", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Read-Aloud Day",
+        tasks: [
+          { text: "Choose any English article or book passage (200–300 words). Read aloud for 15 minutes.", tip: "The New Yorker or The Atlantic online are excellent — complex sentences, natural rhythm." },
+          { text: "Record the first paragraph. Listen back. Identify: which 2 prosody features slipped? (stress, schwa, intonation, function word reduction)" },
+          { text: "Re-read that paragraph targeting those 2 features specifically. Record again. Compare." },
+          { text: "Shadow 10 min Obama after your read-aloud. Contrast his rhythm to yours.", link: OBAMA, linkText: "→ Obama" },
+        ]
+      },
+      {
+        title: "Week 3 Benchmark",
+        tasks: [
+          { text: "Record the 5 benchmark sentences. Save as 'Day 21'.", type: "rec" },
+          { text: "Listen to Day 1 → Day 14 → Day 21. Can you hear the rhythm changing?" },
+          { text: "ELSA score check for the week.", link: ELSA, linkText: "→ ELSA" },
+          { text: "Write this week's insight in notes: which prosody feature changed most?" },
+        ]
+      },
+    ]
+  },
+  {
+    num: 4,
+    title: "Flapping, Linking & Connected Speech",
+    focus: "Phase 3 — How Words Connect",
+    phase: "p3",
+    days: [
+      {
+        title: "The American Flap /ɾ/ — 'butter, water, better'",
+        tasks: [
+          { text: "Watch Rachel's English: 'American T — The Flap T'", link: RACHEL_BASE + "flap+T+American", linkText: "→ Rachel: Flap T" },
+          { text: "/t/ and /d/ between vowels (when following vowel is unstressed) → quick tap /ɾ/. This is the MOST American thing you can do.", tip: "'butter' = BUɾer. 'water' = WAɾer. 'better' = BEɾer. 'city' = SIɾi. 'dirty' = DIɾi." },
+          { text: "Drill x20 each: butter, water, better, city, pretty, dirty, little, bottle, total, metal, notice" },
+          { text: "Shadow 10 min Obama. Focus on every T between vowels — does he flap it?", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA: flap-T practice", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "T-Glottalization — 'button, mountain'",
+        tasks: [
+          { text: "Watch Rachel's English: 'Glottal Stop T'", link: RACHEL_BASE + "glottal+stop+T", linkText: "→ Rachel: Glottal T" },
+          { text: "/t/ before syllabic /n/ → glottal stop /ʔ/. 'button'=BUʔn, 'mountain'=MOUNʔn, 'important'=imPORʔnt, 'certain'=CERʔn" },
+          { text: "Drill x20: button, mountain, important, certain, written, rotten, cotton, sentence, fountain" },
+          { text: "YouGlish: search 'important' — listen for the glottal stop in the middle", link: YOUGLISH + "important", linkText: "→ YouGlish: 'important'" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Yod-Coalescence — 'didja, whatcha, wouldja'",
+        tasks: [
+          { text: "Watch Rachel's English: 'Did You — Reduction in Conversation'", link: RACHEL_BASE + "did+you+reduction", linkText: "→ Rachel: Did You" },
+          { text: "/t+j/ → /tʃ/ and /d+j/ → /dʒ/ at word boundaries. These are MANDATORY in fluent GA.", tip: "'did you' → 'didja'. 'what you' → 'whatcha'. 'could you' → 'couldja'. 'would you' → 'wouldja'." },
+          { text: "Drill these phrases until they feel natural: 'What did you do?' 'Would you like some?' 'Could you help me?' 'Did you see that?'" },
+          { text: "Shadow 15 min Obama. Find every 'did you', 'would you', 'could you'. Does he coalesce?", link: OBAMA, linkText: "→ Obama" },
+        ]
+      },
+      {
+        title: "Linking Between Words",
+        tasks: [
+          { text: "Watch Rachel's English: 'Linking in American English'", link: RACHEL_BASE + "linking+American", linkText: "→ Rachel: Linking" },
+          { text: "In GA, words don't stop and start — they flow together. Consonant-to-vowel linking is everywhere.", tip: "'pick it up' → 'pi-ki-tup'. 'not at all' → 'no-ta-tall'. 'in a minute' → 'i-na-minute'." },
+          { text: "Drill these linked phrases x10 each: pick it up, take it off, get it on, leave it out, put it away" },
+          { text: "Shadow 15 min Obama. Focus on how he blends words together — there are NO gaps between words.", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Gonna, Wanna, Hafta — Contracted Forms",
+        tasks: [
+          { text: "Watch Rachel's English: 'Gonna, Wanna, Gotta'", link: RACHEL_BASE + "gonna+wanna+gotta", linkText: "→ Rachel: Reductions" },
+          { text: "These are NOT lazy English. They ARE American English in spontaneous speech: going to→gonna, want to→wanna, have to→hafta, has to→hasta, supposed to→sposta, used to→yoosta" },
+          { text: "Build 5 sentences using each form. Say them at full conversational speed.", tip: "If you say 'I am going to go to the store', you sound like a textbook. Say 'I'm gonna go to the store'." },
+          { text: "Shadow 15 min Obama and count how many times he uses reduced forms vs full forms.", link: OBAMA, linkText: "→ Obama" },
+        ]
+      },
+      {
+        title: "Full Integration Shadow Day",
+        tasks: [
+          { text: "Shadow 25 minutes straight. No stopping. 1.0x speed.", link: OBAMA, linkText: "→ Obama speech" },
+          { text: "After: identify 5 moments where connected-speech rules (flap, glottal, coalescence, linking) happened." },
+          { text: "Write them in notes. Practice those exact phrases 20x each." },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Week 4 Benchmark",
+        tasks: [
+          { text: "Record the 5 benchmark sentences. Save as 'Day 28'.", type: "rec" },
+          { text: "Listen to all 4 recordings: Day 1, 7, 14, 21, 28. Write one sentence about what changed each week.", type: "rec" },
+          { text: "ELSA: check monthly score trend.", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+    ]
+  },
+  {
+    num: 5,
+    title: "Speed & Spontaneity",
+    focus: "Phase 3/4 — Building Fluency Under Load",
+    phase: "p3",
+    days: [
+      {
+        title: "Shadow at 1.1x Speed",
+        tasks: [
+          { text: "Shadow 20 min of Obama at 1.1x speed (YouTube settings).", link: OBAMA, linkText: "→ Obama" },
+          { text: "At this speed you CANNOT process phoneme-by-phoneme. You're forced to chunk and automate.", tip: "This is intentional overload. Errors are expected. The automaticity you build here transfers to normal speed." },
+          { text: "Note: which sounds collapsed first under speed pressure? Write in notes.", },
+          { text: "ELSA session at your most problematic sound this week", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Read-Aloud — 20 Minutes",
+        tasks: [
+          { text: "Read any English article aloud for 20 minutes nonstop.", tip: "Choose something you find genuinely interesting — engagement keeps your speech more natural." },
+          { text: "Record the first 2 minutes. Listen back. Identify the 1 sound that collapses most when you're reading AND thinking." },
+          { text: "Drill that sound specifically for 10 minutes.", link: RACHEL_BASE, linkText: "→ Rachel's channel (find your sound)" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Semi-Scripted Speaking Practice",
+        tasks: [
+          { text: "Write a 90-second introduction of yourself. Mark the stressed words. Mark function words to reduce.", tip: "This is your anchor speech — over-learn it until it's automatic. It becomes your confidence base in real conversations." },
+          { text: "Rehearse your introduction 10 times. Record the 10th attempt.", type: "rec" },
+          { text: "Identify 3 specific phonology issues in the recording. Drill those." },
+          { text: "Shadow 15 min Obama. Note how he handles introductions and transitions.", link: OBAMA, linkText: "→ Obama" },
+        ]
+      },
+      {
+        title: "One-Sound Focus Day: Your Weakest Sound",
+        tasks: [
+          { text: "Look at your notes from the past 4 weeks. What sound keeps appearing as a problem? That's today's target." },
+          { text: "Watch the relevant Rachel's English video for that sound.", link: RACHEL_BASE, linkText: "→ Rachel's channel" },
+          { text: "50 repetitions of that sound in isolation. 50 in syllables. 50 in words. 50 in short sentences.", tip: "This deliberate massed practice is uncomfortable. It's also what creates automaticity." },
+          { text: "ELSA: focus drill on that specific sound. Record your score.", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Prosody Day — Contrast Sentences",
+        tasks: [
+          { text: "Watch Rachel's English: 'Thought Groups in American English'", link: RACHEL_BASE + "thought+groups", linkText: "→ Rachel: Thought Groups" },
+          { text: "GA speech is organized in thought groups — short phrases with one stressed word and a brief pause before the next group.", tip: "'My father / worked at a water treatment plant / for thirty years.' Each slash is a thought group boundary." },
+          { text: "Take benchmark sentence 4 and practice it with thought groups. Record it.", type: "rec" },
+          { text: "Shadow 20 min Obama. This time, mark his thought group boundaries with a tap or finger." , link: OBAMA, linkText: "→ Obama" },
+        ]
+      },
+      {
+        title: "Extended Shadow Session",
+        tasks: [
+          { text: "Shadow 30 minutes continuous Obama.", link: OBAMA, linkText: "→ Obama" },
+          { text: "After: record yourself talking about something you know well (your work, a hobby, something you watched) for 3 minutes. Don't read.", type: "rec" },
+          { text: "Listen back. This is your current spontaneous speech level. Note the gap between your shadow quality and your spontaneous speech quality." },
+        ]
+      },
+      {
+        title: "Week 5 Benchmark",
+        tasks: [
+          { text: "Record the 5 benchmark sentences. Save as 'Day 35'.", type: "rec" },
+          { text: "Also record: speak spontaneously for 2 minutes on any topic. Save as 'Day 35 Spontaneous'.", type: "rec" },
+          { text: "ELSA: check overall score.", link: ELSA, linkText: "→ ELSA" },
+          { text: "Write: what is the biggest remaining gap between your deliberate and spontaneous speech?" },
+        ]
+      },
+    ]
+  },
+  {
+    num: 6,
+    title: "Closing the Deliberate/Spontaneous Gap",
+    focus: "Phase 4 — Automation Under Cognitive Load",
+    phase: "p4",
+    days: [
+      {
+        title: "Spontaneous Speech Target: One Sound",
+        tasks: [
+          { text: "This week, pick ONE target sound. Every conversation, every sentence you speak, that is your only phonological focus.", tip: "You can't monitor everything under cognitive load. Monitoring one thing is possible and builds genuine automaticity." },
+          { text: "Shadow 20 min Obama focusing on your chosen sound.", link: OBAMA, linkText: "→ Obama" },
+          { text: "ELSA: intensive practice on that one sound. Aim for your highest score yet.", link: ELSA, linkText: "→ ELSA" },
+          { text: "Read aloud 15 minutes. Every 5 minutes, note whether the target sound is holding.", },
+        ]
+      },
+      {
+        title: "Monologue Practice",
+        tasks: [
+          { text: "Record a 5-minute monologue on a topic you care about. Unprepared.", type: "rec" },
+          { text: "Listen back. Timestamp every pronunciation error you catch. Count them." },
+          { text: "Drill the top 5 mispronounced words from your monologue using YouGlish + Rachel's English.", link: YOUGLISH, linkText: "→ YouGlish" },
+          { text: "Re-record the monologue targeting those 5 words. Note the difference.", type: "rec" },
+        ]
+      },
+      {
+        title: "Rachel's English: Advanced Topics",
+        tasks: [
+          { text: "Watch Rachel's English: 'Stressed vs Unstressed Syllables'", link: RACHEL_BASE + "stressed+unstressed+syllables", linkText: "→ Rachel: Stress" },
+          { text: "Watch Rachel's English: 'How Americans Really Talk (Connected Speech)'", link: RACHEL_BASE + "how+Americans+really+talk", linkText: "→ Rachel: Real Talk" },
+          { text: "Shadow 20 min Obama at 1.1x speed.", link: OBAMA, linkText: "→ Obama 1.1x" },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Prosody Polish — Pitch Range",
+        tasks: [
+          { text: "Watch Rachel's English: 'American English Intonation — Rise and Fall'", link: RACHEL_BASE + "intonation+rise+fall", linkText: "→ Rachel: Intonation" },
+          { text: "Egyptian Arabic tends to use a narrower pitch range in speech. GA speakers use larger pitch swings for emphasis.", tip: "Obama is a masterclass in this. His stressed words jump noticeably higher. His unstressed words drop into monotone. Copy this extremity." },
+          { text: "Shadow 20 min Obama. This time, exaggerate his pitch movements. Go too far. Then pull back to 80% of that exaggeration." },
+          { text: "ELSA session", link: ELSA, linkText: "→ ELSA" },
+        ]
+      },
+      {
+        title: "Full Recording Day",
+        tasks: [
+          { text: "Record the 5 benchmark sentences.", type: "rec" },
+          { text: "Record a 5-min spontaneous monologue.", type: "rec" },
+          { text: "Record yourself shadowing 2 minutes of Obama. All three files saved as 'Day 54'.", type: "rec" },
+        ]
+      },
+      {
+        title: "Review & Identify Final Targets",
+        tasks: [
+          { text: "Listen to Day 1, Day 28, Day 54 benchmark recordings back to back." },
+          { text: "Write: the 3 sounds/features that have changed most. The 2 sounds that still need work after Day 60." },
+          { text: "For the 2 remaining sounds: find Rachel's English video for each and watch it.", link: RACHEL_BASE, linkText: "→ Rachel's channel" },
+          { text: "These 2 sounds become your post-program focus.", },
+        ]
+      },
+      {
+        title: "Day 60 — Final Benchmark",
+        tasks: [
+          { text: "Record the 5 benchmark sentences. Save as 'Day 60 Final'.", type: "rec" },
+          { text: "Record a 5-minute spontaneous monologue. Save as 'Day 60 Spontaneous'.", type: "rec" },
+          { text: "Listen to Day 1 Baseline vs Day 60 Final. This is your 60-day result.", },
+          { text: "ELSA: run a full session. Screenshot your score. This is your starting benchmark for the next phase.", link: ELSA, linkText: "→ ELSA" },
+          { text: "Write: what was the single most impactful practice from the entire program?" },
+        ]
+      },
+    ]
+  }
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+
+function getState() {
+  try {
+    const s = localStorage.getItem('accent60');
+    return s ? JSON.parse(s) : {};
+  } catch(e) { return {}; }
+}
+
+function saveState(state) {
+  try { localStorage.setItem('accent60', JSON.stringify(state)); } catch(e) {}
+}
+
+let state = getState();
+
+function taskKey(weekNum, dayIdx, taskIdx) {
+  return `w${weekNum}d${dayIdx}t${taskIdx}`;
+}
+
+function noteKey(weekNum, dayIdx) {
+  return `w${weekNum}d${dayIdx}_note`;
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+
+function renderAll() {
+  const container = document.getElementById('weeks-container');
+  container.innerHTML = '';
+
+  let totalTasks = 0, doneTasks = 0;
+
+  weeks.forEach(week => {
+    const weekEl = document.createElement('div');
+    weekEl.className = 'week';
+    weekEl.dataset.week = week.num;
+
+    // Week-level stats
+    let wTotal = 0, wDone = 0;
+    week.days.forEach((day, di) => {
+      day.tasks.forEach((task, ti) => {
+        wTotal++; totalTasks++;
+        if (state[taskKey(week.num, di, ti)]) { wDone++; doneTasks++; }
+      });
+    });
+
+    // Dots
+    const dots = week.days.map((day, di) => {
+      const dayTotal = day.tasks.length;
+      const dayDone = day.tasks.filter((t,ti) => state[taskKey(week.num, di, ti)]).length;
+      const cls = dayDone === dayTotal ? 'done' : dayDone > 0 ? 'partial' : '';
+      return `<div class="day-dot ${cls}"></div>`;
+    }).join('');
+
+    weekEl.innerHTML = `
+      <div class="week-header" onclick="toggleWeek(${week.num})">
+        <div class="week-num">${week.num}</div>
+        <div class="week-info">
+          <div class="week-title">${week.title}</div>
+          <div class="week-focus">${week.focus} — ${wDone}/${wTotal}</div>
+        </div>
+        <div class="week-progress-mini">${dots}</div>
+        <div class="week-chevron">▼</div>
+      </div>
+      <div class="days-container" id="week-${week.num}-days"></div>
+    `;
+
+    container.appendChild(weekEl);
+
+    const daysContainer = weekEl.querySelector('.days-container');
+
+    week.days.forEach((day, di) => {
+      const globalDay = (week.num - 1) * 7 + di + 1;
+      const dayTotal = day.tasks.length;
+      const dayDone = day.tasks.filter((t,ti) => state[taskKey(week.num, di, ti)]).length;
+      const allDone = dayDone === dayTotal;
+
+      const dayEl = document.createElement('div');
+      dayEl.className = `day${allDone ? ' all-done' : ''}`;
+      dayEl.dataset.week = week.num;
+      dayEl.dataset.day = di;
+
+      const tasksHtml = day.tasks.map((task, ti) => {
+        const key = taskKey(week.num, di, ti);
+        const checked = !!state[key];
+        const linkHtml = task.link ? `<a href="${task.link}" target="_blank" rel="noopener" class="task-link" onclick="event.stopPropagation()">${task.linkText || '→ Open'}</a>` : '';
+        const tipHtml = task.tip ? `<div class="task-tip">${task.tip}</div>` : '';
+        return `
+          <div class="task ${checked ? 'checked' : ''} ${task.type === 'rec' ? 'rec-task' : ''}" onclick="toggleTask('${key}', ${week.num}, ${di}, ${ti})">
+            <div class="task-checkbox"></div>
+            <div class="task-content">
+              <div class="task-text">${task.text}${task.type === 'rec' ? ' <span class="rec-badge">record</span>' : ''}</div>
+              ${linkHtml}
+              ${tipHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const noteVal = state[noteKey(week.num, di)] || '';
+
+      dayEl.innerHTML = `
+        <div class="day-header" onclick="toggleDay(${week.num}, ${di})">
+          <div class="day-num">DAY ${globalDay}</div>
+          <div class="day-title-text">${day.title}</div>
+          <div class="day-check-count">${dayDone}/${dayTotal}</div>
+          <div class="day-chevron">▼</div>
+        </div>
+        <div class="tasks">
+          <div class="phase-banner ${week.phase}">${week.focus}</div>
+          ${tasksHtml}
+          <div class="day-notes">
+            <div class="notes-label">Session Notes</div>
+            <textarea class="notes-input" placeholder="What clicked today? What didn't? Write it here..." rows="2" onclick="event.stopPropagation()" onchange="saveNote(${week.num}, ${di}, this.value)">${noteVal}</textarea>
+          </div>
+        </div>
+      `;
+
+      daysContainer.appendChild(dayEl);
+    });
+  });
+
+  // Update overall progress
+  const pct = totalTasks > 0 ? (doneTasks / totalTasks * 100) : 0;
+  document.getElementById('overall-count').textContent = `${doneTasks} / ${totalTasks} tasks`;
+  document.getElementById('overall-bar').style.width = pct + '%';
+}
+
+// ─── INTERACTIONS ─────────────────────────────────────────────────────────────
+
+function toggleWeek(weekNum) {
+  const el = document.querySelector(`.week[data-week="${weekNum}"]`);
+  if (el) el.classList.toggle('open');
+}
+
+function toggleDay(weekNum, dayIdx) {
+  const el = document.querySelector(`.day[data-week="${weekNum}"][data-day="${dayIdx}"]`);
+  if (el) el.classList.toggle('open');
+}
+
+function toggleTask(key, weekNum, dayIdx, taskIdx) {
+  state[key] = !state[key];
+  saveState(state);
+  renderAll();
+  // Re-open week and day after re-render
+  const weekEl = document.querySelector(`.week[data-week="${weekNum}"]`);
+  if (weekEl) weekEl.classList.add('open');
+  const dayEl = document.querySelector(`.day[data-week="${weekNum}"][data-day="${dayIdx}"]`);
+  if (dayEl) dayEl.classList.add('open');
+}
+
+function saveNote(weekNum, dayIdx, value) {
+  state[noteKey(weekNum, dayIdx)] = value;
+  saveState(state);
+}
+
+function resetAll() {
+  if (confirm('Reset all progress and notes? This cannot be undone.')) {
+    state = {};
+    saveState(state);
+    renderAll();
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderAll();
+
+// Auto-open week 1 day 1 on first visit
+if (Object.keys(state).length === 0) {
+  setTimeout(() => {
+    const w = document.querySelector('.week[data-week="1"]');
+    if (w) { w.classList.add('open'); }
+  }, 100);
+}
+</script>
+</body>
+</html>
